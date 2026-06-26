@@ -31,6 +31,11 @@ An AI-powered Telegram chatbot built using **n8n**, **Groq**, and **Telegram Bot
 4. Connect the credentials.
 5. Activate the workflow.
 
+## 📸 Workflow
+<p align="center">
+  <img src="workflow.png" alt="Workflow" width="1000"/>
+</p>
+
 ## 📌 Project Highlights
 
 - ✔️ AI Agent architecture
