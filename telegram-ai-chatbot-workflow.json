@@ -1,0 +1,229 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4e23fc38-eae5-4bc9-8546-cdebeb83ca7c",
+      "name": "Telegram Trigger",
+      "webhookId": "166f7cc9-2866-4865-8193-913a3d0e645f",
+      "credentials": {
+        "telegramApi": {
+          "id": "Ym6N4pxGfc4uCMF2",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=You are an intelligent, friendly, and highly capable AI assistant.\n\nAlways answer the user's question directly before providing any extra information. Keep your responses clear, concise, and practical. Avoid long introductions, filler, repetition, or unnecessary explanations.\n\nUse simple, natural language that anyone can understand. When appropriate, include a short example or actionable tip to make your answer more useful.\n\nIf a question requires a longer explanation, first give a brief answer, then expand only if necessary. If you're unsure about something, say so honestly instead of making assumptions.\n\nYour goal is simple: provide the best possible answer in the fewest words while remaining accurate, helpful, and engaging.\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        288,
+        0
+      ],
+      "id": "afd97903-9199-4c1f-8a93-2e2d78690fe2",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.chat.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        288,
+        288
+      ],
+      "id": "a5018965-e4d8-4b1d-8564-ead5dcd7da31",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        480,
+        272
+      ],
+      "id": "f8e5cb1f-3736-4431-99d0-04cb50a95916",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        688,
+        0
+      ],
+      "id": "8e6de0e2-bb40-47de-b459-f7dfd0332340",
+      "name": "Telegram",
+      "webhookId": "32e112e6-b0a4-4777-91e5-314b6b16e403",
+      "credentials": {
+        "telegramApi": {
+          "id": "Ym6N4pxGfc4uCMF2",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Created by: Palak Singh\nVersion: 1.0\n\nAn AI-powered Telegram chatbot built with n8n.\nIt receives user messages, processes them using\nGroq chat model, remembers conversation context,\nand sends intelligent replies back to Telegram.",
+        "height": 176,
+        "width": 432
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        416,
+        -224
+      ],
+      "typeVersion": 1,
+      "id": "4523c266-9003-4769-8c3a-e9fa7405db97",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "• Uses Groq chat model\n• Maintains conversation memory\n• Answers user questions\n• Produces concise responses\n• Supports tool calling",
+        "height": 192
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -32,
+        -240
+      ],
+      "typeVersion": 1,
+      "id": "4ba60e01-fe95-41b3-bc1a-47aa0ecaf4f1",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "✓ Instant Replies\n✓ AI Conversations\n✓ Context Memory\n✓ Telegram Integration\n✓ Modular Workflow\n✓ Easily Extendable"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        640,
+        192
+      ],
+      "typeVersion": 1,
+      "id": "a79db886-54a3-452a-be20-d9da525320de",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        64,
+        272
+      ],
+      "id": "46637e92-0569-465d-9f20-4e6c56732401",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "pjBLkgjPSEzuljbb",
+          "name": "Groq account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "76f69332-1783-4872-ac40-6fbb612cd14b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6557be9dc268c4e8d53eef444b5e85e7722d32c0aa0d14db2ddd819ee52b9e24"
+  },
+  "nodeGroups": [],
+  "id": "o3tXjJ3lkEVmhLgl",
+  "tags": []
+}
