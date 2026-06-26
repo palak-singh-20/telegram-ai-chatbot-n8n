@@ -21,7 +21,8 @@ An AI-powered Telegram chatbot built using **n8n**, **Groq**, and **Telegram Bot
 
 ## 📂 Files
 
-- `telegram-ai-chatbot-workflow.json` – Main n8n workflow
+- 📄 [telegram-ai-chatbot-workflow.json](telegram-ai-chatbot-workflow.json) – Main n8n workflow
+- 🖼️ [workflow.jpeg](workflow.jpeg) – Workflow screenshot
 
 ## 📥 How to Use
 
